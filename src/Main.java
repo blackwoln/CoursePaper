@@ -61,10 +61,8 @@ public class Main {
     public static Employee findEmployeeWithMinSalary() {
         Employee minSalaryEmployee = null;
         for (Employee employee : employees) {
-            if (employee != null) {
-                if (minSalaryEmployee == null || employee.getSalary() < minSalaryEmployee.getSalary()) {
-                    minSalaryEmployee = employee;
-                }
+            if (employee != null && (minSalaryEmployee == null || employee.getSalary() < minSalaryEmployee.getSalary())) {
+                minSalaryEmployee = employee;
             }
         }
         return minSalaryEmployee;
@@ -73,10 +71,8 @@ public class Main {
     public static Employee findEmployeeWithMaxSalary() {
         Employee maxSalaryEmployee = null;
         for (Employee employee : employees) {
-            if (employee != null) {
-                if (maxSalaryEmployee == null || employee.getSalary() > maxSalaryEmployee.getSalary()) {
-                    maxSalaryEmployee = employee;
-                }
+            if (employee != null && (maxSalaryEmployee == null || employee.getSalary() > maxSalaryEmployee.getSalary())) {
+                maxSalaryEmployee = employee;
             }
         }
         return maxSalaryEmployee;
