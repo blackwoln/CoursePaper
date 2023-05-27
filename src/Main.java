@@ -38,6 +38,46 @@ public class Main {
 
         // Получить Ф. И. О. всех сотрудников
         printEmployeeNames();
+        System.out.println();
+
+        // Проиндексировать зарплату на 10%
+        indexSalary(10);
+        System.out.println();
+
+        // Найти сотрудника с минимальной зарплатой в отделе 2
+        Employee minSalaryEmployeeInDepartment2 = findEmployeeWithMinSalaryByDepartment(2);
+        System.out.println("Сотрудник с минимальной зарплатой в отделе 2: " + minSalaryEmployeeInDepartment2);
+        System.out.println();
+
+        // Найти сотрудника с максимальной зарплатой в отделе 3
+        Employee maxSalaryEmployeeInDepartment3 = findEmployeeWithMaxSalaryByDepartment(3);
+        System.out.println("Сотрудник с максимальной зарплатой в отделе 3: " + maxSalaryEmployeeInDepartment3);
+        System.out.println();
+
+        // Посчитать сумму затрат на зарплату в отделе 1
+        double totalSalaryExpensesInDepartment1 = calculateTotalSalaryExpensesByDepartment(1);
+        System.out.println("Сумма затрат на зарплату в отделе 1: " + totalSalaryExpensesInDepartment1);
+        System.out.println();
+
+        // Посчитать среднюю зарплату в отделе 4
+        double averageSalaryInDepartment4 = calculateAverageSalaryByDepartment(4);
+        System.out.println("Средняя зарплата в отделе 4: " + averageSalaryInDepartment4);
+        System.out.println();
+
+        // Проиндексировать зарплату всех сотрудников отдела 5 на 5%
+        indexSalaryByDepartment(5, 5);
+        System.out.println();
+
+        // Напечатать всех сотрудников отдела 2
+        printEmployeesByDepartment(2);
+        System.out.println();
+
+        // Вывести информацию о сотрудниках с зарплатой менее 60000
+        printEmployeesWithSalaryLessThan(60000);
+        System.out.println();
+
+        // Вывести информацию о сотрудниках с зарплатой больше или равной 60000
+        printEmployeesWithSalaryGreaterThan(60000);
     }
 
     public static void printAllEmployees() {
@@ -103,6 +143,102 @@ public class Main {
             }
         }
         return count;
+    }
 
+    public static void indexSalary(double percentage) {
+        for (Employee employee : employees) {
+            if (employee != null) {
+                double currentSalary = employee.getSalary();
+                double indexedSalary = currentSalary + (currentSalary * (percentage / 100));
+                employee.setSalary(indexedSalary);
+            }
+        }
+    }
+
+    public static Employee findEmployeeWithMinSalaryByDepartment(int department) {
+        Employee minSalaryEmployee = null;
+        for (Employee employee : employees) {
+            if (employee != null && employee.getDepartment() == department) {
+                if (minSalaryEmployee == null || employee.getSalary() < minSalaryEmployee.getSalary()) {
+                    minSalaryEmployee = employee;
+                }
+            }
+        }
+        return minSalaryEmployee;
+    }
+
+    public static Employee findEmployeeWithMaxSalaryByDepartment(int department) {
+        Employee maxSalaryEmployee = null;
+        for (Employee employee : employees) {
+            if (employee != null && employee.getDepartment() == department) {
+                if (maxSalaryEmployee == null || employee.getSalary() > maxSalaryEmployee.getSalary()) {
+                    maxSalaryEmployee = employee;
+                }
+            }
+        }
+        return maxSalaryEmployee;
+    }
+
+    public static double calculateTotalSalaryExpensesByDepartment(int department) {
+        double total = 0;
+        for (Employee employee : employees) {
+            if (employee != null && employee.getDepartment() == department) {
+                total += employee.getSalary();
+            }
+        }
+        return total;
+    }
+
+    public static double calculateAverageSalaryByDepartment(int department) {
+        double totalSalary = calculateTotalSalaryExpensesByDepartment(department);
+        int employeeCount = countEmployeesByDepartment(department);
+        if (employeeCount == 0) {
+            return 0;
+        }
+        return totalSalary / employeeCount;
+    }
+
+    public static void indexSalaryByDepartment(int department, double percentage) {
+        for (Employee employee : employees) {
+            if (employee != null && employee.getDepartment() == department) {
+                double currentSalary = employee.getSalary();
+                double indexedSalary = currentSalary + (currentSalary * (percentage / 100));
+                employee.setSalary(indexedSalary);
+            }
+        }
+    }
+
+    public static void printEmployeesByDepartment(int department) {
+        for (Employee employee : employees) {
+            if (employee != null && employee.getDepartment() == department) {
+                System.out.println("ID: " + employee.getId() + ", " + employee.getFullName() + ", зарплата: " + employee.getSalary());
+            }
+        }
+    }
+
+    public static void printEmployeesWithSalaryLessThan(double threshold) {
+        for (Employee employee : employees) {
+            if (employee != null && employee.getSalary() < threshold) {
+                System.out.println("ID: " + employee.getId() + ", " + employee.getFullName() + ", зарплата: " + employee.getSalary());
+            }
+        }
+    }
+
+    public static void printEmployeesWithSalaryGreaterThan(double threshold) {
+        for (Employee employee : employees) {
+            if (employee != null && employee.getSalary() >= threshold) {
+                System.out.println("ID: " + employee.getId() + ", " + employee.getFullName() + ", зарплата: " + employee.getSalary());
+            }
+        }
+    }
+
+    private static int countEmployeesByDepartment(int department) {
+        int count = 0;
+        for (Employee employee : employees) {
+            if (employee != null && employee.getDepartment() == department) {
+                count++;
+            }
+        }
+        return count;
     }
 }
